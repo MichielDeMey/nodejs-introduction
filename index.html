@@ -1,0 +1,213 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="node_modules/reveal.js/css/reveal.css">
+    <link rel="stylesheet" href="node_modules/reveal.js/css/theme/white.css">
+    <link rel="stylesheet" href="node_modules/highlight.js/styles/github.css">
+    <script src="node_modules/reveal.js/lib/js/head.min.js"></script>
+    <style type="text/css">
+      .reveal section img {
+        border: none;
+        box-shadow: none;
+      }
+      .reveal pre > code {
+        padding: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+
+        <section>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Node.js_logo.svg">
+        </section>
+
+        <section data-markdown>
+          ## What is Node.js?
+        </section>
+
+        <section data-markdown>
+          ## Release schedule 🗓
+        </section>
+
+        <section data-markdown>
+          ![schedule](https://github.com/nodejs/LTS/raw/master/schedule.png)
+
+          * LTS is supported for 18 months
+          * Even numbers will become LTS releases
+        </section>
+
+        <section data-markdown>
+          [https://nodejs.org/en/download/](https://nodejs.org/en/download/)
+
+          `brew install node`
+        </section>
+
+        <section data-markdown>
+          ## Governance 🏛
+
+          [https://nodejs.org/en/about/governance/](https://nodejs.org/en/about/governance/)
+        </section>
+
+  <!--       <section data-markdown>
+          ## TL;DR
+
+          Node.js foundation with TSC
+
+          Linux Foundation collaboration
+        </section> -->
+
+        <section data-markdown>
+          ![libuv](https://raw.githubusercontent.com/libuv/libuv/master/img/banner.png)
+
+          [https://github.com/libuv/libuv](https://github.com/libuv/libuv)
+        </section>
+
+        <section data-markdown>
+          ## Cross-platform async I/O
+
+          * Event loop
+          * Asynchronous networking (TCP, UDP, DNS, etc.)
+          * Filesystem operations
+          * Child processes, threading, etc.
+        </section>
+
+        <section data-markdown>
+          ## Event loop 🔁
+        </section>
+
+        <section>
+          <img src="https://camo.githubusercontent.com/c52b058fddead54a1557e71a1a97852b3bdd1c76/68747470733a2f2f7363722e7361642e737570696e666f2e636f6d2f61727469636c65732f7265736f75726365732f3136343836322f323230342f312e706e67">
+        </section>
+
+        <section data-markdown>
+          Read the contents from a file
+
+          ```javascript
+          const fs = require('fs')
+
+          fs.readFile('world.txt', 'utf8', (err, data) => {
+            if (err) throw err
+            console.log(data)
+          })
+
+          console.log('hello, ')
+          ```
+        </section>
+
+        <section data-markdown>
+          ## Concurrency 🔀
+        </section>
+
+        <section data-markdown>
+          * error-first callbacks
+            * [caolan/async](https://github.com/caolan/async)
+          * Promises
+            * [petkaantonov/bluebird](https://github.com/petkaantonov/bluebird)
+            * [sindresorhus/promise-fun](https://github.com/sindresorhus/promise-fun)
+          * generators
+            * [tj/co](https://github.com/tj/co)
+          * async / await (Node v8)
+          <!-- <img style="float: left;" src="https://bytearcher.com/articles/parallel-vs-concurrent/concurrent-1.svg" /> -->
+        </section>
+
+        <section data-markdown>
+          ## error-first callbacks
+          * used in Node core
+          * plenty of libraries
+          * The **first argument** of the callback is reserved for an **error object**
+          * The **second argument** of the callback is reserved for any **successful response** data
+        </section>
+
+        <section data-markdown>
+          Merge the contents from 2 files
+
+          ```javascript
+          const fs = require('fs')
+          const async = require('async')
+
+          async.parallel([
+            callback => fs.readFile('foo.txt', 'utf8', callback),
+            callback => fs.readFile('bar.txt', 'utf8', callback)
+          ], (error, results) => {
+            if (error) return console.error(error)
+            console.log(results.join('\n'))
+          })
+          ```
+        </section>
+
+        <section data-markdown>
+          Merge the contents from 2 files (Promise edition)
+
+          ```javascript
+          const fs = require('fs')
+          const pify = require('pify')
+          const readFile = pify(fs.readFile)
+
+          Promise.all([
+            readFile('foo.txt', 'utf8'),
+            readFile('bar.txt', 'utf8')
+          ])
+          .then(results => {
+            console.log(results.join('\n'))
+          })
+          .catch(error => {
+            console.error(error)
+          })
+          ```
+        </section>
+
+        <section data-markdown>
+          ## Packages 📦
+        </section>
+
+        <section data-markdown>
+          ## Package managers
+          * NPM (included)
+          * yarn
+        </section>
+
+        <section data-markdown>
+          ## by the numbers (2016)
+          * ~40,000 publishes/week
+          * 102,460 publishers
+          * over 450.000 modules
+        </section>
+
+        <section data-markdown>
+          ## Security 🔒
+        </section>
+
+        <section data-markdown>
+          * https://nodesecurity.io/
+          * https://snyk.io/
+        </section>
+
+        <section data-markdown>
+          ## Mad Science ⚗️
+
+        </section>
+
+      </div>
+    </div>
+    <script src="node_modules/reveal.js/js/reveal.js"></script>
+    <script>
+      Reveal.initialize({
+        history: true,
+        dependencies: [{
+          src: 'node_modules/reveal.js/plugin/markdown/marked.js',
+          condition: function () { return !!document.querySelector('[data-markdown]') }
+        }, {
+          src: 'node_modules/reveal.js/plugin/markdown/markdown.js',
+          condition: function () { return !!document.querySelector('[data-markdown]') }
+        }, {
+          src: 'node_modules/reveal.js/plugin/highlight/highlight.js',
+          callback: () => hljs.initHighlightingOnLoad()
+        }
+          // { src: 'plugin/notes/notes.js', async: true }
+        ]
+      })
+    </script>
+  </body>
+</html>

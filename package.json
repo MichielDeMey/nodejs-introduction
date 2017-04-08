@@ -1,0 +1,13 @@
+{
+  "name": "nodejs-introduction",
+  "version": "1.0.0",
+  "main": "index.html",
+  "author": "Michiel De Mey <de.mey.michiel@gmail>",
+  "license": "MIT",
+  "dependencies": {
+    "async": "^2.3.0",
+    "highlight.js": "^9.10.0",
+    "pify": "^2.3.0",
+    "reveal.js": "^3.4.1"
+  }
+}
