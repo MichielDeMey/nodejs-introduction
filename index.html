@@ -1,11 +1,17 @@
 <html>
   <head>
     <meta charset="UTF-8">
+
     <link rel="stylesheet" href="node_modules/reveal.js/css/reveal.css">
     <link rel="stylesheet" href="node_modules/reveal.js/css/theme/white.css">
     <link rel="stylesheet" href="node_modules/highlight.js/styles/github.css">
+
     <script src="node_modules/reveal.js/lib/js/head.min.js"></script>
+
     <style type="text/css">
+      .reveal code {
+        font-family: 'Fira Code', monospace;
+      }
       .reveal section img {
         border: none;
         box-shadow: none;
@@ -27,6 +33,17 @@
           ## What is Node.js?
         </section>
 
+        <section>
+          <span data-markdown>
+            > "an **asynchronous** event driven **JavaScript** runtime"
+          </span>
+
+          <span class="fragment" data-markdown>
+            * small core
+            * backwards compatible
+          </span>
+        </section>
+
         <section data-markdown>
           ## Release schedule 🗓
         </section>
@@ -34,8 +51,8 @@
         <section data-markdown>
           ![schedule](https://github.com/nodejs/LTS/raw/master/schedule.png)
 
+          * LTS yearly release
           * LTS is supported for 18 months
-          * Even numbers will become LTS releases
         </section>
 
         <section data-markdown>
@@ -106,7 +123,7 @@
         <section data-markdown>
           * error-first callbacks
             * [caolan/async](https://github.com/caolan/async)
-          * Promises
+          * promises
             * [petkaantonov/bluebird](https://github.com/petkaantonov/bluebird)
             * [sindresorhus/promise-fun](https://github.com/sindresorhus/promise-fun)
           * generators
@@ -119,8 +136,8 @@
           ## error-first callbacks
           * used in Node core
           * plenty of libraries
-          * The **first argument** of the callback is reserved for an **error object**
-          * The **second argument** of the callback is reserved for any **successful response** data
+          * The **first argument** → error object
+          * The **second argument** → response data
         </section>
 
         <section data-markdown>
@@ -138,6 +155,8 @@
             console.log(results.join('\n'))
           })
           ```
+
+          `node merge-callback.js`
         </section>
 
         <section data-markdown>
@@ -159,6 +178,8 @@
             console.error(error)
           })
           ```
+
+          ``node merge-promise.js``
         </section>
 
         <section data-markdown>
@@ -168,7 +189,7 @@
         <section data-markdown>
           ## Package managers
           * NPM (included)
-          * yarn
+          * [yarn](https://yarnpkg.com/en/)
         </section>
 
         <section data-markdown>
@@ -178,7 +199,38 @@
           * over 450.000 modules
         </section>
 
+        <section id="debugging" data-markdown>
+          ## Debugging 🐞
+        </section>
+
         <section data-markdown>
+          * `node debug` (deprecated)
+          * `node --inspect`
+          * [inspect-process](https://github.com/jaridmargolin/inspect-process)
+        </section>
+
+        <section id="testing" data-markdown>
+          ## Testing 🙏
+        </section>
+
+        <section data-markdown>
+          * [ava](https://github.com/avajs/ava)
+          * [tap](https://github.com/tapjs/node-tap) and [tape](https://github.com/substack/tape)
+          * [mocha](https://mochajs.org/)
+          * …
+        </section>
+
+        <section id="bench" data-markdown>
+          ## Benching 🏋️
+        </section>
+
+        <section data-markdown>
+          * [autocannon](https://github.com/mcollina/autocannon)
+          * [nanobench](https://github.com/mafintosh/nanobench)
+          * [fastbench](https://github.com/mcollina/fastbench)
+        </section>
+
+        <section id="security" data-markdown>
           ## Security 🔒
         </section>
 
@@ -187,9 +239,27 @@
           * https://snyk.io/
         </section>
 
-        <section data-markdown>
+        <section id="looking-ahead" data-markdown>
+          ## Looking ahead 🔭
+
+          `node --v8-options | grep "in progress"`
+        </section>
+
+        <section id="mad-science" data-markdown>
           ## Mad Science ⚗️
 
+          * ⚡️ [WebTorrent](https://github.com/feross/webtorrent)
+          * 🎹 [LoopJS](http://loopjs.com/)
+          * 📡 [IPFS](https://github.com/ipfs/js-ipfs)
+        </section>
+
+        <section id="learning" data-markdown>
+          ## Learning 🎓
+        </section>
+
+        <section data-markdown>
+          * [NodeSchool workshops](https://nodeschool.io/#workshoppers)
+          * [The Art of Node](https://github.com/maxogden/art-of-node)
         </section>
 
       </div>
@@ -200,10 +270,10 @@
         history: true,
         dependencies: [{
           src: 'node_modules/reveal.js/plugin/markdown/marked.js',
-          condition: function () { return !!document.querySelector('[data-markdown]') }
+          condition: () => !!document.querySelector('[data-markdown]')
         }, {
           src: 'node_modules/reveal.js/plugin/markdown/markdown.js',
-          condition: function () { return !!document.querySelector('[data-markdown]') }
+          condition: () => !!document.querySelector('[data-markdown]')
         }, {
           src: 'node_modules/reveal.js/plugin/highlight/highlight.js',
           callback: () => hljs.initHighlightingOnLoad()
