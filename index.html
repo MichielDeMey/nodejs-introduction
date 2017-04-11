@@ -86,14 +86,17 @@
 
           ```javascript
           const fs = require('fs')
+          const { stdout } = process
 
           fs.readFile('world.txt', 'utf8', (err, data) => {
             if (err) throw err
-            console.log(data)
+            stdout.write(data)
           })
 
-          console.log('hello, ')
+          stdout.write('hello, ')
           ```
+
+          `node hello-world.js`
         </section>
 
         <section data-markdown>
