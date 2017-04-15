@@ -11,5 +11,9 @@
     "pify": "^2.3.0",
     "reveal.js": "^3.4.1",
     "through2": "^2.0.3"
+  },
+  "devDependencies": {
+    "standard": "^10.0.2",
+    "tap": "^10.3.2"
   }
 }

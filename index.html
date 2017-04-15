@@ -29,12 +29,11 @@
           <img src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Node.js_logo.svg">
         </section>
 
-        <section data-markdown>
-          ## What is Node.js?
-        </section>
-
         <section>
           <span data-markdown>
+            ## What is Node.js?
+          </span>
+          <span class="fragment" data-markdown>
             > "an **asynchronous** event driven **JavaScript** runtime"
           </span>
 
@@ -42,6 +41,28 @@
             * small core
             * backwards compatible
           </span>
+        </section>
+
+        <section data-markdown>
+          ## Good
+          * it's easy
+          * it's fast
+          * vibrant ecosystem
+        </section>
+
+        <section data-markdown>
+          ## Tricky
+          * error handling
+          * taming concurrency
+        </section>
+
+        <section data-markdown>
+          ## Caveats
+          * single threaded
+            * Cluster module
+            * spawn_child
+          * ~1.5GB of RAM
+            * use `--max_old_heap_space`
         </section>
 
         <section data-markdown>
@@ -56,29 +77,40 @@
         </section>
 
         <section data-markdown>
-          [https://nodejs.org/en/download/](https://nodejs.org/en/download/)
-
-          `brew install node`
-        </section>
-
-        <section data-markdown>
           ## Governance 🏛
 
           [https://nodejs.org/en/about/governance/](https://nodejs.org/en/about/governance/)
         </section>
 
-  <!--       <section data-markdown>
-          ## TL;DR
+        <section data-markdown>
+          [https://nodejs.org/en/download/](https://nodejs.org/en/download/)
 
-          Node.js foundation with TSC
+          `$ brew install node`
+        </section>
 
-          Linux Foundation collaboration
-        </section> -->
+        <section data-markdown>
+          ## REPL
+
+          ```javascript
+          $ node
+          > 1 + 1
+          2
+          > [4, 9].map(Math.sqrt)
+          [ 2, 3 ]
+          > require('crypto').randomBytes(24).toString('base64')
+          'oVroG1HCaLIw2gv9yFHIOL9xUpHsN26v'
+          ```
+        </section>
 
         <section data-markdown>
           ![libuv](https://raw.githubusercontent.com/libuv/libuv/master/img/banner.png)
 
           [https://github.com/libuv/libuv](https://github.com/libuv/libuv)
+        </section>
+
+        <section data-markdown>
+          > The C library that implements the Node.js event loop,
+          > its worker threads and all of the asynchronous behaviors of the platform.
         </section>
 
         <section data-markdown>
@@ -98,22 +130,26 @@
           <img src="https://camo.githubusercontent.com/c52b058fddead54a1557e71a1a97852b3bdd1c76/68747470733a2f2f7363722e7361642e737570696e666f2e636f6d2f61727469636c65732f7265736f75726365732f3136343836322f323230342f312e706e67">
         </section>
 
-        <section data-markdown>
-          Read the contents from a file
+        <section>
+          <span data-markdown>
+            Read the contents from a file
 
-          ```javascript
-          const fs = require('fs')
-          const { stdout } = process
+            ```javascript
+            const fs = require('fs')
+            const { stdout } = process
 
-          fs.readFile('world.txt', 'utf8', (err, data) => {
-            if (err) throw err
-            stdout.write(data)
-          })
+            fs.readFile('world.txt', 'utf8', (err, data) => {
+              if (err) throw err
+              stdout.write(data)
+            })
 
-          stdout.write('hello, ')
-          ```
+            stdout.write('hello, ')
+            ```
+          </span>
 
-          `node hello-world.js`
+          <span class="fragment" data-markdown>
+            `> hello, world!`
+          </span>
         </section>
 
         <section data-markdown>
@@ -136,8 +172,8 @@
           ## error-first callbacks
           * used in Node core
           * plenty of libraries
-          * The **first argument** → error object
-          * The **second argument** → response data
+          * The **first argument** → **error** object
+          * The **second argument** → **response** data
         </section>
 
         <section data-markdown>
@@ -155,12 +191,10 @@
             console.log(results.join('\n'))
           })
           ```
-
-          `node merge-callback.js`
         </section>
 
         <section data-markdown>
-          Merge the contents from 2 files (Promise edition)
+          Merge the contents from 2 files (Promises)
 
           ```javascript
           const fs = require('fs')
@@ -178,8 +212,26 @@
             console.error(error)
           })
           ```
+        </section>
 
-          ``node merge-promise.js``
+        <section data-markdown>
+          Merge the contents from 2 files (async/await)
+
+          ```javascript
+          const fs = require('fs')
+          const pify = require('pify')
+          const readFile = pify(fs.readFile)
+
+          async function main () {
+            const foo = await readFile('foo.txt')
+            const bar = await readFile('bar.txt')
+
+            console.log([foo, bar].join('\n'))
+          }
+          main().catch(err => {
+            console.error(err)
+          })
+          ```
         </section>
 
         <section data-markdown>
@@ -187,16 +239,28 @@
         </section>
 
         <section data-markdown>
-          ## Package managers
-          * NPM (included)
-          * [yarn](https://yarnpkg.com/en/)
-        </section>
-
-        <section data-markdown>
           ## by the numbers (2016)
           * ~40,000 publishes/week
           * 102,460 publishers
           * over 450.000 modules
+        </section>
+
+        <section data-markdown>
+          ## Package managers
+          * [NPM](https://npmjs.org/) (included)
+          * [yarn](https://yarnpkg.com/en/)
+        </section>
+
+        <section data-markdown>
+          ## Creating a package ✍️
+        </section>
+
+        <section data-markdown>
+          ```bash
+          $ npm init
+          > name: (my-package)
+          > license: (ISC)
+          ```
         </section>
 
         <section id="debugging" data-markdown>
